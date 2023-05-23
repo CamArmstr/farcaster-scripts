@@ -10,11 +10,20 @@ if (!FC_MNEMONIC) {
 const wallet = Wallet.fromMnemonic(FC_MNEMONIC);
 
 const apiClient = new MerkleAPIClient(wallet);
+console.log("Connected to Merkle API")
+
 
 const user = await apiClient.lookupUserByUsername("dwr");
+
+console.log("Got Dan");
+try {
 if (user === undefined) throw new Error("no such user");
 
+console.log("No Dan");
+
 const followees = await apiClient.fetchUserFollowing(user);
+
+console.log("Got Dan's followees", followees)
 
 while (true) {
     const { value: f, done } = await followees.next();
@@ -31,4 +40,13 @@ while (true) {
         // ..
     }
 }
+
+
+} catch (e) {
+    console.log("It broke here");
+}
+
+
+
+
 
